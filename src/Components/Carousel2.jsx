@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//ths is same file
+
 function Carousel2(){
     const[carouselDb, setCarouselDb] = useState([
         {id:0, backdrop_path:"src/assets/movie-banner-1.jpg"},
