@@ -1,30 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import MovieCard from "./MovieCard";
 
 function Movies() {
 
   const [pageNo, setPageNo] = useState(1);
-  const [watchlist, setWatchlist] = useState( initialiseWatchList() );
   const [movies, setMovies] = useState([]);
-
-  function initialiseWatchList(){
-    if(!localStorage.getItem("watchlist")){
-      localStorage.setItem("watchlist", JSON.stringify([]));
-      return [];
-    }
-    return JSON.parse( localStorage.getItem("watchlist") );
-  }
-
-  function addToWatchlist(movieObj){
-    const newWatchlist = [...watchlist, movieObj];
-    localStorage.setItem( "watchlist", JSON.stringify(newWatchlist) );
-    setWatchlist(newWatchlist);
-  }
-  function removeFromWatchlist(movieObj){
-    const newWatchlist = watchlist.filter(curMovieObj => curMovieObj.id != movieObj.id);
-    localStorage.setItem( "watchlist", JSON.stringify(newWatchlist) );
-    setWatchlist(newWatchlist);
-  }
 
   useEffect(()=>{
     const options = {
@@ -74,9 +54,7 @@ function Movies() {
           <MovieCard
             key={movieObj.id}
             movieObj={movieObj}
-            watchList={watchlist}
-            addToWatchlist={addToWatchlist}
-            removeFromWatchlist={removeFromWatchlist}/>
+          />
         ))}
       </div>
 

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import genreids from "../utility";
+import { globalWatchlist } from "../App";
 
 function WatchList() {
-  const [watchList, setWatchList] = useState( initialiseWatchList() );
   const [search, setSearch] = useState("");
   const [nameSort, setNameSort] = useState("none");
   const [ratingSort, setRatingSort] = useState("none");
   const [genreList, setGenreList] = useState(new Set());
   const [curGenre, setCurGenre] = useState(-1);
+  const {watchList, removeFromWatchlist, sortWatchlist} = useContext(globalWatchlist);
 
   useEffect(()=>{
     let newSet = new Set();
@@ -18,18 +19,9 @@ function WatchList() {
     setGenreList(newSet);
   }, [watchList]);
 
-  function initialiseWatchList(){
-    if(!localStorage.getItem("watchlist")){
-      localStorage.setItem("watchlist", JSON.stringify([]));
-      return [];
-    }
-    return JSON.parse( localStorage.getItem("watchlist") );
-  }
-
   function sortNames(){
-    const newArr = [...watchList];
     if(nameSort == "desc" || nameSort == "none"){
-      newArr.sort((movie1, movie2)=>{
+      sortWatchlist((movie1, movie2)=>{
         if(movie1.title > movie2.title)
           return 1;
         if(movie1.title < movie2.title)
@@ -40,7 +32,7 @@ function WatchList() {
       setRatingSort("none");
     }
     else{
-      newArr.sort((movie1, movie2)=>{
+      sortWatchlist((movie1, movie2)=>{
         if(movie1.title > movie2.title)
           return -1;
         if(movie1.title < movie2.title)
@@ -49,22 +41,19 @@ function WatchList() {
       });
       setNameSort("desc");
       setRatingSort("none");
-    } 
-    setWatchList(newArr);
+    }
   }
   function sortRating(){
-    const newArr = [...watchList];
     if(ratingSort == "desc" || ratingSort == "none"){
-      newArr.sort((movie1, movie2)=> movie2.vote_average - movie1.vote_average);
+      sortWatchlist((movie1, movie2)=> movie2.vote_average - movie1.vote_average);
       setRatingSort("asc");
       setNameSort("none");
     }
     else{
-      newArr.sort((movie1, movie2)=> movie1.vote_average - movie2.vote_average);
+      sortWatchlist((movie1, movie2)=> movie1.vote_average - movie2.vote_average);
       setRatingSort("desc");
       setNameSort("none");
-    } 
-    setWatchList(newArr);
+    }
   }
   
 
@@ -149,7 +138,7 @@ function WatchList() {
               <td className="px-6 py-4 text-left">{movie.popularity}</td>
               <td className="px-6 py-4 text-left">{genreids[movie.genre_ids[0]]}</td>
               <td className="px-6 py-4 text-center">
-                <button className="fa-solid fa-trash"></button>
+                <button className="fa-solid fa-trash" onClick={()=>{removeFromWatchlist(movie)}}></button>
               </td>
             </tr>
           ))}
