@@ -62,12 +62,12 @@ function WatchList() {
     <div className="flex items-center ml-5 mt-8">
       <input 
         type="text" 
-        placeholder="Search Movies"
+        placeholder="Search in watchlist"
         onChange={event => {
           setSearch(event.target.value);
         }}
         value={search}
-        className="bg-gray-200 border border-gray-500 outline-none px-4 h-[2.5rem] w-[18rem] rounded text-sm"
+        className="bg-gray-100 border border-gray-500 outline-none px-4 h-[2.5rem] w-[18rem] rounded text-sm"
       />
       <div className="ml-4 flex flex-wrap gap-2">
         {Array.from(genreList).sort().map(genre => (
