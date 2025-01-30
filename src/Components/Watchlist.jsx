@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import genreids from "../utility";
-import { globalWatchlist } from "../App";
+import { watchlistContext } from "./watchlistContext";
 
 function WatchList() {
   const [search, setSearch] = useState("");
@@ -8,7 +8,7 @@ function WatchList() {
   const [ratingSort, setRatingSort] = useState("none");
   const [genreList, setGenreList] = useState(new Set());
   const [curGenre, setCurGenre] = useState(-1);
-  const {watchList, removeFromWatchlist, sortWatchlist} = useContext(globalWatchlist);
+  const {watchList, removeFromWatchlist, sortWatchlist} = useContext(watchlistContext);
 
   useEffect(()=>{
     let newSet = new Set();

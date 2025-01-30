@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { globalWatchlist } from "../App";
+import { watchlistContext } from "./watchlistContext";
 
 function MovieCard({movieObj}){
-    const {watchList, addToWatchlist, removeFromWatchlist} = useContext(globalWatchlist);
+    const {watchList, addToWatchlist, removeFromWatchlist} = useContext(watchlistContext);
 
     function heartIconDisplay(){
         for(let curMovieEle of watchList){
